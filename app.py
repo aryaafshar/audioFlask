@@ -1,8 +1,9 @@
 from flask import Flask, render_template, Response, request, redirect,url_for
+import argparse
 from jinja2 import Environment, FileSystemLoader
 from googletrans import Translator
-import base64
-import json
+#import base64
+#import json
 import whisper
 import os
 import struct
@@ -10,7 +11,11 @@ import io
 from pydub import AudioSegment
 import numpy as np
 from scipy.io import wavfile
-
+import speech_recognition as sr
+from datetime import datetime, timedelta
+from queue import Queue
+from time import sleep
+from sys import platform
 def remove_bytes(buffer, start, end):
     fmt = '%ds %dx %ds' % (start, end-start, len(buffer)-end)  # 3 way split
     return b''.join(struct.unpack(fmt, buffer))
