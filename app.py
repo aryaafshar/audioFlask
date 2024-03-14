@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 from queue import Queue
 from time import sleep
 from sys import platform
-import numpy as np
+
 def remove_bytes(buffer, start, end):
     fmt = '%ds %dx %ds' % (start, end-start, len(buffer)-end)  # 3 way split
     return b''.join(struct.unpack(fmt, buffer))
