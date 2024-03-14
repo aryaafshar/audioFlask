@@ -45,17 +45,18 @@ def receiver():
 
   
   audio_np = np.frombuffer(data, dtype=np.int16).astype(np.float32) / 32768.0
-  with open('media/voice.ogg','wb') as f:
+  #with open('media/voice.ogg','wb') as f:
     
-    f.write(data)
-    f.close()
-
-     
+    #f.write(data)
+    #f.close()
+   
   
   #print(data)
-  
-  
-  return Response('data recived')
+  model=whisper.load_model("small")
+
+  result_src=model.transcribe(audio_np, language='ja', fp16=False)
+
+  return render_template('index.html',result_jp=result_src['text'],result_en=result_src['text'])
   
   
 
