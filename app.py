@@ -16,6 +16,7 @@ from datetime import datetime, timedelta
 from queue import Queue
 from time import sleep
 from sys import platform
+import numpy as np
 def remove_bytes(buffer, start, end):
     fmt = '%ds %dx %ds' % (start, end-start, len(buffer)-end)  # 3 way split
     return b''.join(struct.unpack(fmt, buffer))
@@ -43,7 +44,7 @@ def receiver():
   data=remove_bytes(data,len(data)-62,len(data))
 
   
-  
+  audio_np = np.frombuffer(data, dtype=np.int16).astype(np.float32) / 32768.0
   with open('media/voice.ogg','wb') as f:
     
     f.write(data)
